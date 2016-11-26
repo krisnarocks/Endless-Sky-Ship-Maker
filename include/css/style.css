@@ -1,0 +1,87 @@
+/*
+section.css
+
+Endless Sky Ship Pack Maker style
+
+Copyright (c) 2016 stanislaus krisna
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Sans-Serif;
+}
+
+body{
+  margin: 10px 0px 40px 0px;
+}
+
+/* App styling */
+#app-title{margin-bottom: 20px}
+
+#app-generator-tab-container{
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+#app-generator-tab{
+  padding: 10px;
+}
+
+.app-generator-tab-items{
+  list-style: none;
+  display: inline-block;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.app-generator-tab-items:not(:last-child){border-right: solid 1px black}
+.app-generator-tab-items:not(:first-child){padding-left: 1px}
+.app-content{padding: 20px 0px}
+
+hr{
+  border: none;
+  border-bottom: solid 1px #e1e1e1;
+  margin: 10px 0px;
+}
+
+.app-content-hidden{display:none}
+
+#app-generator-shipAttr > input{margin: 5px 0px}
+#app-generator-shipAttr > label{
+  min-width: 182px;
+  display: inline-block;
+}
+
+#app-generator-code > textarea{
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 150px;
+  font-family: monospace;
+}
+
+#app-generator-generate{margin-top: 20px}
+#app-generator-generate > button{font-size: 16px}
+.ship-mount-container > li{list-style: none}
+
+.app-content > ul > li:nth-child(even){background-color:#f1f1f1}
+.app-content > ul > li:nth-child(odd){border:solid 1px #f1f1f1}
+.app-content > ul > li:first-child{border-radius: 5px 5px 0px 0px}
+.app-content > ul > li:last-child{border-radius: 0px 0px 5px 5px}
+.app-content > ul > li:only-child{border-radius: 5px 5px 5px 5px}
+.app-content > ul > li{padding:5px;list-style:none;}
