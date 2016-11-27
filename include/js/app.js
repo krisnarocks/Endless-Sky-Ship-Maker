@@ -297,6 +297,20 @@ App.prototype.generate = function(){
   gc += '"hull damage" ' + hd + '\n\t\t\t' // hull damage
   gc += '"hit force" ' + hf + '\n\t' // hit force
   
+  // Clear print array
+  this.outfits = []
+  
+  // Push mountpoint equipment to temp sorting array
+  var mount_items = [];
+  for(var i = 0; i < document.getElementsByClassName('essm-ship-outfit-c').length; i++){
+    mount_items[document.getElementsByClassName('essm-ship-outfit-c')[i].value] === undefined ? mount_items[document.getElementsByClassName('essm-ship-outfit-c')[i].value] = 1 : mount_items[document.getElementsByClassName('essm-ship-outfit-c')[i].value] += 1
+  }
+  
+  // Push mountpoint equipment temp sorting array to printing array
+  for(prop in mount_items){
+    this.outfits.push({name:prop,property:mount_items[prop]})
+  }
+  
   // Push equipment data to printing array (outfits)
   for(var i = 0; i < this.equipments.length; i++){
     this.outfits.push({name:this.equipments[i].n,property:this.equipments[i].c})
