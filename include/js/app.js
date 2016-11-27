@@ -246,7 +246,7 @@ App.prototype.loadHardpoint = function(){
         options += '<option value="'+e[i]+'">'+e[i]+'</option>'
       }
     })
-    tmp_html[val[i].type.toLowerCase()] += '<li>'+val[i].type+' '+val[i].x+' '+val[i].y+' <select><option disabled selected style="font-weight:bold;">Select loadout</option>'+options+'</select></li>'
+    tmp_html[val[i].type.toLowerCase()] += '<li>'+val[i].type+' '+val[i].x+' '+val[i].y+' <select class="essm-ship-outfit-c"><option disabled selected style="font-weight:bold;" value="">Select loadout</option>'+options+'</select></li>'
   }
   this.mountPoints = val
   for(var i = 0; i < val.length; i++){
@@ -297,18 +297,23 @@ App.prototype.generate = function(){
   gc += '"hull damage" ' + hd + '\n\t\t\t' // hull damage
   gc += '"hit force" ' + hf + '\n\t' // hit force
   
+  // Push equipment data to printing array (outfits)
   for(var i = 0; i < this.equipments.length; i++){
     this.outfits.push({name:this.equipments[i].n,property:this.equipments[i].c})
   }
   
+  // List all selected outfits
   gc += 'outfits\n\t' // outfits
   for(var i = 0; i < this.outfits.length; i++){
     gc += '\t"' + this.outfits[i].name + '"' // outfit name
     this.outfits[i].hasOwnProperty('property') ? gc += ' ' + this.outfits[i].property + '\n\t' : gc += '\n\t' // outfit property
   }
   
+  // Generate mountpoints with its attached outfit
   for(var i = 0; i < this.mountPoints.length; i++){
-    gc += this.mountPoints[i].type+' ' + this.mountPoints[i].x+ ' ' + this.mountPoints[i].y+ ' ' + '\n\t' // hit force
+    gc += this.mountPoints[i].type+' ' + this.mountPoints[i].x+ ' ' + this.mountPoints[i].y // mountpoint data
+    document.getElementsByClassName('essm-ship-outfit-c')[i].value == '' ? gc+='' : gc+=' "'+document.getElementsByClassName('essm-ship-outfit-c')[i].value+'"' // mountpoint attachment data
+    gc += '\n\t' // hit force
   }
   
   gc += 'description "' + this.getVal('#'+this.shipParam.desc).replace(/\n|\t/g,'') + '"' // ship description
