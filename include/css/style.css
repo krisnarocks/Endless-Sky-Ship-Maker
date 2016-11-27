@@ -28,7 +28,11 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEAL
 }
 
 body{
-  margin: 10px 0px 40px 0px;
+  margin: 10px 0px 0px 0px;
+  
+  min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 /* App styling */
@@ -75,7 +79,7 @@ hr{
   font-family: monospace;
 }
 
-#app-generator-generate{margin-top: 20px}
+#app-generator-generate{margin-top: 20px;margin-bottom: 40px;}
 #app-generator-generate > button{font-size: 16px}
 .ship-mount-container > li{list-style: none}
 
@@ -85,3 +89,19 @@ hr{
 .app-content > ul > li:last-child{border-radius: 0px 0px 5px 5px}
 .app-content > ul > li:only-child{border-radius: 5px 5px 5px 5px}
 .app-content > ul > li{padding:5px;list-style:none;}
+
+#app-footer{
+  background: #f1f1f1;
+  width: 100%;
+  bottom: 0;
+  position: relative;
+  padding-top: 40px;
+}
+
+#app-page-content{
+  margin-top: -121px;
+  padding-top: 121px;
+  min-height: calc(100vh - 113px - 240px);
+}
+
+#app-footer,#app-page-content:after{height: 150px}

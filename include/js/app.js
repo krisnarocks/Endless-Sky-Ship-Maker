@@ -102,7 +102,40 @@ var App = function(setting){
                       {type:'other',name:'Security Station'},
                       {type:'other',name:'Nerve Gas'},
                       {type:'other',name:'Local Map'},
-                      {type:'other',name:'Pilot\'s License'}]
+                      {type:'other',name:'Pilot\'s License'},{type:'guns',name:'Energy Blaster'},
+                      {type:'guns',name:'Modified Blaster'},
+                      {type:'turrets',name:'Blaster Turret'},
+                      {type:'turrets',name:'Modified Blaster Turret'},
+                      {type:'turrets',name:'Quad Blaster Turret'},
+                      {type:'guns',name:'Beam Laser'},
+                      {type:'guns',name:'Heavy Laser'},
+                      {type:'guns',name:'Electron Beam'},
+                      {type:'turrets',name:'Laser Turret'},
+                      {type:'turrets',name:'Heavy Laser Turret'},
+                      {type:'turrets',name:'Electron Turret'},
+                      {type:'turrets',name:'Anti-Missile Turret'},
+                      {type:'turrets',name:'Heavy Anti-Missile Turret'},
+                      {type:'guns',name:'Particle Cannon'},
+                      {type:'guns',name:'Proton Gun'},
+                      {type:'guns',name:'Plasma Cannon'},
+                      {type:'turrets',name:'Plasma Turret'},
+                      {type:'secondary weapons',name:'Flamethrower'},
+                      {type:'ammunition',name:'Meteor Missile'},
+                      {type:'secondary weapons',name:'Meteor Missile Launcher'},
+                      {type:'ammunition',name:'Sidewinder Missile'},
+                      {type:'secondary weapons',name:'Sidewinder Missile Launcher'},
+                      {type:'ammunition',name:'Javelin'},
+                      {type:'secondary weapons',name:'Javelin Pod'},
+                      {type:'ammunition',name:'Torpedo'},
+                      {type:'secondary weapons',name:'Torpedo Launcher'},
+                      {type:'ammunition',name:'Typhoon Torpedo'},
+                      {type:'secondary weapons',name:'Typhoon Launcher'},
+                      {type:'ammunition',name:'Heavy Rocket'},
+                      {type:'secondary weapons',name:'Heavy Rocket Launcher'},
+                      {type:'secondary weapons',name:'Nuclear Missile'},
+                      {type:'ammunition',name:'Gatling Gun Ammo'},
+                      {type:'secondary weapons',name:'Gatling Gun'}
+                      ]
   
   this.getVal = function(arg,id){
     /*
@@ -278,7 +311,7 @@ App.prototype.generate = function(){
     gc += this.mountPoints[i].type+' ' + this.mountPoints[i].x+ ' ' + this.mountPoints[i].y+ ' ' + '\n\t' // hit force
   }
   
-  gc += 'description "' + this.getVal('#'+this.shipParam.desc) + '"' // ship description
+  gc += 'description "' + this.getVal('#'+this.shipParam.desc).replace(/\n|\t/g,'') + '"' // ship description
   document.getElementById(this.codeGenID).innerHTML = gc
 }
 
@@ -287,7 +320,7 @@ App.prototype.listItems = function(target_type,callback){
   
   /* Generate option */
   for(var i = 0; i < this.outfit_list.length; i++){
-    if(this.outfit_list[i].type === target_type){
+    if(this.outfit_list[i].type === target_type || this.outfit_list[i].type === target_type+'s'){
       elementList.push(this.outfit_list[i].name)
     }
   }
