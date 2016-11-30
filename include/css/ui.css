@@ -108,7 +108,7 @@ button.safe:active{
 }
 
 button:disabled{
-  color: #c3c3c3;
+  color: grey;
   background: #eee;
 }
 
