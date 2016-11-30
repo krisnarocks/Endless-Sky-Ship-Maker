@@ -23,6 +23,7 @@
           <li class="app-generator-tab-items" onClick="app.toggleTab(0)">Ship Attribute</li>
           <li class="app-generator-tab-items" onClick="app.toggleTab(1)">Weapon & Engine</li>
           <li class="app-generator-tab-items" onClick="app.toggleTab(2)">Ship Equipment</li>
+          <li class="app-generator-tab-items" onClick="app.toggleTab(4)">Ship Explosion</li>
           <li class="app-generator-tab-items" onClick="app.toggleTab(3)">Get code</li>
         </ul>
       </div>
@@ -35,7 +36,7 @@
         <label for="ship-desc"><h3>Ship Description</h3></label><br><br><textarea id="ship-desc" style="width: 353px; height: 120px;"></textarea><br><br>
         <h3 style="display: inline;">Ship Information</h3> <span style="display: inline; cursor: default;" onClick="if(document.getElementById('ship-info-container').style.display == 'block'){document.getElementById('ship-info-container').style.display = 'none'}else{document.getElementById('ship-info-container').style.display = 'block'}">Show/Hide</span><br>
         <div id="ship-info-container" style="display: none;">
-          <label for="ship-inf-category">Ship Category: </label> <select id="ship-inf-category"></select><br>
+          <label for="ship-inf-category">Ship Category: </label> <select id="ship-inf-category" style="margin-left: -4px;"></select><br>
           <label for="ship-inf-name">Ship Name: </label><input type="text" id="ship-inf-name"><br>
           <label for="ship-inf-cost">Ship Cost: </label><input type="text" id="ship-inf-cost"><br>
           <label for="ship-inf-shield">Ship Shield: </label><input type="text" id="ship-inf-shield"><br>
@@ -92,7 +93,7 @@
         <h2>Ship Equipment</h2>
         <hr>
         <ul id="ship-equipt-list" data-ecount="0">
-        <li>No equipment added</li>
+        <li>Empty list...</li>
         </ul><br><br>
 
         <label for="item-selector">Equipment List</label><br>
@@ -107,7 +108,22 @@
       <div id="app-generator-code" class="section-content app-content app-content-hidden">
         <h2>Code Copy</h2>
         <hr>
-        <textarea id="app-generatedCode" readonly placeholder="Your generated code will be here..."></textarea>
+        <textarea id="app-generatedCode" readonly placeholder="Your generated code will be here..." style="background: #002b36; color: #2aa198;"></textarea>
+      </div>
+
+      <div id="app-generator-explosion" class="section-content app-content app-content-hidden">
+        <h2>Ship Explosion</h2>
+        <hr>
+        <ul id="ship-explosion-list" data-ecount="0">
+        <li>Empty list...</li>
+        </ul><br><br>
+
+        <label for="ship-inf-explosion">Ship Explosion: </label><br>
+        <select id="ship-inf-explosion"></select><br><br><br>
+
+        <label for="explosion-spawn-count">Spawn Count</label><br>
+        <input type="number" id="explosion-spawn-count" min="1" value="1"><br>
+        <button style="margin-top: 10px;" onClick="app.addExplosion('ship-explosion-list',document.getElementById('ship-inf-explosion').value,document.getElementById('explosion-spawn-count').value)">Add explosion</button>
       </div>
 
       <div id="app-generator-generate" class="section-content">
@@ -118,7 +134,7 @@
 
     <footer id="app-footer">
       <span class="section-content">
-        <center style="margin-top: 20px;">Endless Sky Ship Maker, Version 162711<br>A space ship modding tool for <a href="http://endless-sky.github.io/" target="_blank">Endless Sky</a>.<br>Another project by <a href="http://krisnaslife.cu.cc" target="_blank">Stanislaus Krisna</a>.</center>
+        <center style="margin-top: 20px;">Endless Sky Ship Maker, Version 163011<br>A space ship modding tool for <a href="http://endless-sky.github.io/" target="_blank">Endless Sky</a>.<br>Another project by <a href="http://krisnaslife.cu.cc" target="_blank">Stanislaus Krisna</a>.</center>
       </span>
     </footer>
     <script src="include/js/app.js"></script>
@@ -158,7 +174,7 @@
       }
     })
 
-    app.getShipClass(function(e){
+    app.getShipClasses(function(e){
       document.getElementById('ship-inf-category').innerHTML = '<option disabled selected>Select Category...</option>'
       for(var i = 0; i < e.length; i++){
         switch(e[i]){
@@ -177,6 +193,19 @@
 
       document.getElementById('ship-inf-category').addEventListener('change',function(){
         app.ship_class_id = this.value
+      })
+    })
+
+    app.getShipClassList(function(e){
+      document.getElementById('ship-inf-explosion').innerHTML = '<option disabled selected>Select Explosion...</option>'
+      for(var i = 0; i < e.length; i++){
+        document.getElementById('ship-inf-explosion').innerHTML += '<option value="'+e[i]+'">'+e[i]+'</option>'
+      }
+
+      document.getElementById('ship-inf-explosion').addEventListener('change',function(){
+        // app.ship_explosion_id = this.value
+        console.log(this.value.includes('final explosion'))
+        document.getElementById('explosion-spawn-count').value = document.getElementById('explosion-spawn-count').disabled = (this.value.includes('final explosion') == true ? 1 : 0)
       })
     })
     </script>

@@ -34,112 +34,123 @@ var App = function(setting){
   this.mountPoints = []
 
   this.equipments = []
+  this.explosions = []
 
   this.ship_class_id = 0
+  this.ship_explosion_id = 0
 
   this.outfit_list = [{type:'engine',name:'Afterburner'},
-                      {type:'engine',name:'Ionic Afterburner'},
-                      {type:'engine',name:'X1050 Ion Engines'},
-                      {type:'engine',name:'X1700 Ion Thruster'},
-                      {type:'engine',name:'X2700 Ion Thruster'},
-                      {type:'engine',name:'X3700 Ion Thruster'},
-                      {type:'engine',name:'X4700 Ion Thruster'},
-                      {type:'engine',name:'X5700 Ion Thruster'},
-                      {type:'engine',name:'X1200 Ion Steering'},
-                      {type:'engine',name:'X2200 Ion Steering'},
-                      {type:'engine',name:'X3200 Ion Steering'},
-                      {type:'engine',name:'X4200 Ion Steering'},
-                      {type:'engine',name:'X5200 Ion Steering'},
-                      {type:'engine',name:'Chipmunk Plasma Thruster'},
-                      {type:'engine',name:'Greyhound Plasma Thruster'},
-                      {type:'engine',name:'Impala Plasma Thruster'},
-                      {type:'engine',name:'Orca Plasma Thruster'},
-                      {type:'engine',name:'Tyrant Plasma Thruster'},
-                      {type:'engine',name:'Chipmunk Plasma Steering'},
-                      {type:'engine',name:'Greyhound Plasma Steering'},
-                      {type:'engine',name:'Impala Plasma Steering'},
-                      {type:'engine',name:'Orca Plasma Steering'},
-                      {type:'engine',name:'Tyrant Plasma Steering'},
-                      {type:'engine',name:'A120 Atomic Thruster'},
-                      {type:'engine',name:'A250 Atomic Thruster'},
-                      {type:'engine',name:'A370 Atomic Thruster'},
-                      {type:'engine',name:'A520 Atomic Thruster'},
-                      {type:'engine',name:'A860 Atomic Thruster'},
-                      {type:'engine',name:'A125 Atomic Steering'},
-                      {type:'engine',name:'A255 Atomic Steering'},
-                      {type:'engine',name:'A375 Atomic Steering'},
-                      {type:'engine',name:'A525 Atomic Steering'},
-                      {type:'engine',name:'A865 Atomic Steering'},
-                      {type:'engine',name:'AR120 Reverse Thruster'}, // End of engine list
-                      {type:'other',name:'Cooling Ducts'},
-                      {type:'other',name:'Water Coolant System'},
-                      {type:'other',name:'Liquid Nitrogen Cooler'},
-                      {type:'other',name:'Liquid Helium Cooler'},
-                      {type:'other',name:'D14-RN Shield Generator'},
-                      {type:'other',name:'D23-QP Shield Generator'},
-                      {type:'other',name:'D41-HY Shield Generator'},
-                      {type:'other',name:'D67-TM Shield Generator'},
-                      {type:'other',name:'D94-YV Shield Generator'},
-                      {type:'other',name:'S-270 Regenerator'},
-                      {type:'other',name:'S-970 Regenerator'},
-                      {type:'other',name:'Small Radar Jammer'},
-                      {type:'other',name:'Large Radar Jammer'},
-                      {type:'other',name:'Ramscoop'},
-                      {type:'other',name:'Catalytic Ramscoop'},
-                      {type:'other',name:'Hyperdrive'},
-                      {type:'other',name:'Scram Drive'},
-                      {type:'other',name:'Jump Drive'},
-                      {type:'other',name:'Cargo Scanner'},
-                      {type:'other',name:'Outfit Scanner'},
-                      {type:'other',name:'Surveillance Pod'},
-                      {type:'other',name:'Cloaking Device'},
-                      {type:'other',name:'Mass Expansion'},
-                      {type:'other',name:'Cargo Expansion'},
-                      {type:'other',name:'Bunk Room'},
-                      {type:'other',name:'Small Bunk Room'},
-                      {type:'other',name:'Fuel Pod'},
-                      {type:'other',name:'Interference Plating'},
-                      {type:'other',name:'Laser Rifle'},
-                      {type:'other',name:'Fragmentation Grenades'},
-                      {type:'other',name:'Security Station'},
-                      {type:'other',name:'Nerve Gas'},
-                      {type:'other',name:'Local Map'},
-                      {type:'other',name:'Pilot\'s License'},{type:'guns',name:'Energy Blaster'},
-                      {type:'guns',name:'Modified Blaster'},
-                      {type:'turrets',name:'Blaster Turret'},
-                      {type:'turrets',name:'Modified Blaster Turret'},
-                      {type:'turrets',name:'Quad Blaster Turret'},
-                      {type:'guns',name:'Beam Laser'},
-                      {type:'guns',name:'Heavy Laser'},
-                      {type:'guns',name:'Electron Beam'},
-                      {type:'turrets',name:'Laser Turret'},
-                      {type:'turrets',name:'Heavy Laser Turret'},
-                      {type:'turrets',name:'Electron Turret'},
-                      {type:'turrets',name:'Anti-Missile Turret'},
-                      {type:'turrets',name:'Heavy Anti-Missile Turret'},
-                      {type:'guns',name:'Particle Cannon'},
-                      {type:'guns',name:'Proton Gun'},
-                      {type:'guns',name:'Plasma Cannon'},
-                      {type:'turrets',name:'Plasma Turret'},
-                      {type:'other',name:'Flamethrower'},
-                      {type:'other',name:'Meteor Missile'},
-                      {type:'other',name:'Meteor Missile Launcher'},
-                      {type:'other',name:'Sidewinder Missile'},
-                      {type:'other',name:'Sidewinder Missile Launcher'},
-                      {type:'other',name:'Javelin'},
-                      {type:'other',name:'Javelin Pod'},
-                      {type:'other',name:'Torpedo'},
-                      {type:'other',name:'Torpedo Launcher'},
-                      {type:'other',name:'Typhoon Torpedo'},
-                      {type:'other',name:'Typhoon Launcher'},
-                      {type:'other',name:'Heavy Rocket'},
-                      {type:'other',name:'Heavy Rocket Launcher'},
-                      {type:'other',name:'Nuclear Missile'},
-                      {type:'other',name:'Gatling Gun Ammo'},
-                      {type:'other',name:'Gatling Gun'}
-                      ]
+  {type:'engine',name:'Ionic Afterburner'},
+  {type:'engine',name:'X1050 Ion Engines'},
+  {type:'engine',name:'X1700 Ion Thruster'},
+  {type:'engine',name:'X2700 Ion Thruster'},
+  {type:'engine',name:'X3700 Ion Thruster'},
+  {type:'engine',name:'X4700 Ion Thruster'},
+  {type:'engine',name:'X5700 Ion Thruster'},
+  {type:'engine',name:'X1200 Ion Steering'},
+  {type:'engine',name:'X2200 Ion Steering'},
+  {type:'engine',name:'X3200 Ion Steering'},
+  {type:'engine',name:'X4200 Ion Steering'},
+  {type:'engine',name:'X5200 Ion Steering'},
+  {type:'engine',name:'Chipmunk Plasma Thruster'},
+  {type:'engine',name:'Greyhound Plasma Thruster'},
+  {type:'engine',name:'Impala Plasma Thruster'},
+  {type:'engine',name:'Orca Plasma Thruster'},
+  {type:'engine',name:'Tyrant Plasma Thruster'},
+  {type:'engine',name:'Chipmunk Plasma Steering'},
+  {type:'engine',name:'Greyhound Plasma Steering'},
+  {type:'engine',name:'Impala Plasma Steering'},
+  {type:'engine',name:'Orca Plasma Steering'},
+  {type:'engine',name:'Tyrant Plasma Steering'},
+  {type:'engine',name:'A120 Atomic Thruster'},
+  {type:'engine',name:'A250 Atomic Thruster'},
+  {type:'engine',name:'A370 Atomic Thruster'},
+  {type:'engine',name:'A520 Atomic Thruster'},
+  {type:'engine',name:'A860 Atomic Thruster'},
+  {type:'engine',name:'A125 Atomic Steering'},
+  {type:'engine',name:'A255 Atomic Steering'},
+  {type:'engine',name:'A375 Atomic Steering'},
+  {type:'engine',name:'A525 Atomic Steering'},
+  {type:'engine',name:'A865 Atomic Steering'},
+  {type:'engine',name:'AR120 Reverse Thruster'}, // End of engine list
+  {type:'other',name:'Cooling Ducts'},
+  {type:'other',name:'Water Coolant System'},
+  {type:'other',name:'Liquid Nitrogen Cooler'},
+  {type:'other',name:'Liquid Helium Cooler'},
+  {type:'other',name:'D14-RN Shield Generator'},
+  {type:'other',name:'D23-QP Shield Generator'},
+  {type:'other',name:'D41-HY Shield Generator'},
+  {type:'other',name:'D67-TM Shield Generator'},
+  {type:'other',name:'D94-YV Shield Generator'},
+  {type:'other',name:'S-270 Regenerator'},
+  {type:'other',name:'S-970 Regenerator'},
+  {type:'other',name:'Small Radar Jammer'},
+  {type:'other',name:'Large Radar Jammer'},
+  {type:'other',name:'Ramscoop'},
+  {type:'other',name:'Catalytic Ramscoop'},
+  {type:'other',name:'Hyperdrive'},
+  {type:'other',name:'Scram Drive'},
+  {type:'other',name:'Jump Drive'},
+  {type:'other',name:'Cargo Scanner'},
+  {type:'other',name:'Outfit Scanner'},
+  {type:'other',name:'Surveillance Pod'},
+  {type:'other',name:'Cloaking Device'},
+  {type:'other',name:'Mass Expansion'},
+  {type:'other',name:'Cargo Expansion'},
+  {type:'other',name:'Bunk Room'},
+  {type:'other',name:'Small Bunk Room'},
+  {type:'other',name:'Fuel Pod'},
+  {type:'other',name:'Interference Plating'},
+  {type:'other',name:'Laser Rifle'},
+  {type:'other',name:'Fragmentation Grenades'},
+  {type:'other',name:'Security Station'},
+  {type:'other',name:'Nerve Gas'},
+  {type:'other',name:'Local Map'},
+  {type:'other',name:'Pilot\'s License'},{type:'guns',name:'Energy Blaster'},
+  {type:'guns',name:'Modified Blaster'},
+  {type:'turrets',name:'Blaster Turret'},
+  {type:'turrets',name:'Modified Blaster Turret'},
+  {type:'turrets',name:'Quad Blaster Turret'},
+  {type:'guns',name:'Beam Laser'},
+  {type:'guns',name:'Heavy Laser'},
+  {type:'guns',name:'Electron Beam'},
+  {type:'turrets',name:'Laser Turret'},
+  {type:'turrets',name:'Heavy Laser Turret'},
+  {type:'turrets',name:'Electron Turret'},
+  {type:'turrets',name:'Anti-Missile Turret'},
+  {type:'turrets',name:'Heavy Anti-Missile Turret'},
+  {type:'guns',name:'Particle Cannon'},
+  {type:'guns',name:'Proton Gun'},
+  {type:'guns',name:'Plasma Cannon'},
+  {type:'turrets',name:'Plasma Turret'},
+  {type:'other',name:'Flamethrower'},
+  {type:'other',name:'Meteor Missile'},
+  {type:'other',name:'Meteor Missile Launcher'},
+  {type:'other',name:'Sidewinder Missile'},
+  {type:'other',name:'Sidewinder Missile Launcher'},
+  {type:'other',name:'Javelin'},
+  {type:'other',name:'Javelin Pod'},
+  {type:'other',name:'Torpedo'},
+  {type:'other',name:'Torpedo Launcher'},
+  {type:'other',name:'Typhoon Torpedo'},
+  {type:'other',name:'Typhoon Launcher'},
+  {type:'other',name:'Heavy Rocket'},
+  {type:'other',name:'Heavy Rocket Launcher'},
+  {type:'other',name:'Nuclear Missile'},
+  {type:'other',name:'Gatling Gun Ammo'},
+  {type:'other',name:'Gatling Gun'}]
 
   this.ship_class = ['Transport', 'Light Freighter', 'Heavy Freighter', 'Interceptor', 'Light Warship', 'Medium Warship', 'Heavy Warship', 'Fighter', 'Drone']
+  this.explosion_list = ['plasma explosion',
+  'tiny explosion',
+  'small explosion',
+  'medium explosion',
+  'large explosion',
+  'huge explosion',
+  'nuke explosion',
+  'final explosion small',
+  'final explosion medium',
+  'final explosion large']
 
   this.getVal = function(arg,id){
     /*
@@ -193,15 +204,15 @@ var App = function(setting){
     // a.loadHardpoint()
   })
 
-  this.listEquipment = function(target){
+  this.listFromObject = function(target, obj, errorMsg){
     target = document.getElementById(target)
 
-    target.dataset.ecount = this.equipments.length
+    target.dataset.ecount = obj.length
     target.innerHTML = ''
 
     /* Display array */
-    for(var i = 0; i < this.equipments.length; i++){
-      var html_string = '<li>'+this.equipments[i].n+' x '+this.equipments[i].c+'</li>'
+    for(var i = 0; i < obj.length; i++){
+      var html_string = '<li>'+obj[i].n+' x '+obj[i].c+'</li>'
 
       var d = document.createElement('div')
       d.innerHTML = html_string
@@ -213,13 +224,13 @@ var App = function(setting){
       btn.style.marginLeft = '10px'
       var that = this
       btn.addEventListener('click', function(){
-        that.removeEquipment(target.id,i)
+        that.removeEquipment(target.id,i,obj)
       })
       d.appendChild(btn)
       target.appendChild(d)
     }
 
-    this.equipments.length === 0 ? target.innerHTML = '<li>No equipment added</li>' : target
+    obj.length === 0 ? target.innerHTML = '<li>'+errorMsg+'</li>' : target
   }
 }
 
@@ -335,6 +346,13 @@ App.prototype.generate = function(){
     gc += '\n\t' // hit force
   }
 
+  for(var i = 0; i < this.explosions.length; i++){
+    this.explosions[i].n.includes('final explosion') == true ? gc += '"final explode" ' : gc += 'explode '
+    gc += '"'+this.explosions[i].n+'"'
+    this.explosions[i].n.includes('final explosion') == true ? gc += '' : gc += ' '+this.explosions[i].c
+    gc += '\n\t'
+  }
+
   gc += 'description "' + this.getVal('#'+this.shipParam.desc).replace(/\n|\t/g,'') + '"' // ship description
   document.getElementById(this.codeGenID).innerHTML = gc
 }
@@ -356,20 +374,37 @@ App.prototype.listItems = function(target_type,callback){
 }
 
 App.prototype.addEquipment = function(target,equipment,count){
+  if(count == 0){
+    return
+  }
+
   this.equipments.push({n:equipment,c:count})
-  this.listEquipment(target)
+  this.listFromObject(target,this.equipments ,'Empty list...')
 }
 
-App.prototype.removeEquipment = function(target,index){
-  this.equipments.pop(index)
-  this.listEquipment(target)
+App.prototype.addExplosion = function(target,equipment,count){
+  if(equipment === 'Select Explosion...' || count == 0){
+    return
+  }
+  this.explosions.push({n:equipment,c:count})
+  this.listFromObject(target,this.explosions ,'Empty list...')
+}
+
+App.prototype.removeEquipment = function(target,index,obj){
+  obj.pop(index)
+  this.listFromObject(target,obj ,'Empty list...')
 }
 
 App.prototype.test = function(){
   console.log('loaded')
 }
 
-App.prototype.getShipClass = function (callback) {
+App.prototype.getShipClasses = function (callback) {
   if(typeof callback == 'function')
     callback(this.ship_class)
+};
+
+App.prototype.getShipClassList = function (callback) {
+  if(typeof callback == 'function')
+    callback(this.explosion_list)
 };
