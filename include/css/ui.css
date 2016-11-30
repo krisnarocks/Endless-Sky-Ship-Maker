@@ -30,6 +30,7 @@ button.default{
   border: none;
   color: white;
   padding: 10px;
+  outline: none;
 }
 
 button.danger{
@@ -37,6 +38,7 @@ button.danger{
   border: none;
   color: white;
   padding: 10px;
+  outline: none;
 }
 
 button.safe{
@@ -44,6 +46,7 @@ button.safe{
   border: none;
   color: white;
   padding: 10px;
+  outline: none;
 }
 
 button{
@@ -70,11 +73,13 @@ button:active{
 
 button.default:hover{
   background: rgb(57, 145, 255);
+  outline: none;
 }
 
 button.default:active{
   background: rgb(33, 132, 255);
   transform: scale(1);
+  outline: none;
 
   -webkit-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
   -moz-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
@@ -83,11 +88,13 @@ button.default:active{
 
 button.danger:hover{
   background: #ff7373;
+  outline: none;
 }
 
 button.danger:active{
   background: #da3c3c;
   transform: scale(1);
+  outline: none;
 
   -webkit-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
   -moz-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
@@ -96,11 +103,13 @@ button.danger:active{
 
 button.safe:hover{
   background: #3fca4a;
+  outline: none;
 }
 
 button.safe:active{
   background: #26982f;
   transform: scale(1);
+  outline: none;
 
   -webkit-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
   -moz-box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
@@ -115,16 +124,19 @@ button:disabled{
 button.safe:disabled{
   color: #45ce51;
   background: #a5e2aa;
+  outline: none;
 }
 
 button.danger:disabled{
   color: #d07c7c;
   background: #ff9898;
+  outline: none;
 }
 
 button.default:disabled{
   color: #7ba1e8;
   background: #acc9ff;
+  outline: none;
 }
 
 input[type='text'],input[type='number'],textarea{
