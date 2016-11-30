@@ -92,3 +92,10 @@ input[type='text'],input[type='number'],textarea{
   padding: 5px;
   border-radius: 3px;
 }
+
+select{
+  padding: 5px;
+  border-radius: 3px;
+  margin-left: -4px;
+  margin-bottom: 5px;
+}

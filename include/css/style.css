@@ -66,8 +66,8 @@ hr{
 
 .app-content-hidden{display:none}
 
-#app-generator-shipAttr > input{margin: 5px 0px}
-#app-generator-shipAttr > label{
+#app-generator-shipAttr input{margin: 5px 0px}
+#app-generator-shipAttr label{
   min-width: 182px;
   display: inline-block;
 }

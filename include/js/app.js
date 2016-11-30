@@ -28,13 +28,15 @@ var App = function(setting){
   this.shipParam = setting.shipParam
   this.hardpoint = setting.hardpoint
   this.mountPointContainer = setting.mountPointContainer
-  
+
   this.outfits = []
   this.explosions = []
   this.mountPoints = []
-  
+
   this.equipments = []
-  
+
+  this.ship_class_id = 0
+
   this.outfit_list = [{type:'engine',name:'Afterburner'},
                       {type:'engine',name:'Ionic Afterburner'},
                       {type:'engine',name:'X1050 Ion Engines'},
@@ -136,73 +138,75 @@ var App = function(setting){
                       {type:'other',name:'Gatling Gun Ammo'},
                       {type:'other',name:'Gatling Gun'}
                       ]
-  
+
+  this.ship_class = ['Transport', 'Light Freighter', 'Heavy Freighter', 'Interceptor', 'Light Warship', 'Medium Warship', 'Heavy Warship', 'Fighter', 'Drone']
+
   this.getVal = function(arg,id){
     /*
     Return selected element value.
-    
+
     Use # as the first character of arg to select element by ID
     Use . as the first character of arg to select element by class then use id to get the element id
     other than # or ., function will select the tag name then use id to get the element id
     */
-    
+
     var ele
     var ele_val = ''
     switch (arg[0]){
       case '.':
       ele = document.getElementsByClassName(arg.slice(1))[id]
       break;
-      
+
       case '#':
       ele = document.getElementById(arg.slice(1))
       break;
-      
+
       default:
       ele = document.getElementsByTagName(arg)[id]
       break;
     }
-    
+
     switch(ele.type){
      case 'text':
      ele_val = ele.value
      break;
-     
+
      case 'textarea':
      ele_val = ele.value
      break;
-     
+
      case 'checkbox':
      ele_val = ele.checked
     }
-    
+
     switch (ele_val){
       case "":
       return '0'
-      
+
       default:
       return ele_val
     }
   }
-  
+
   var a = this
   document.getElementById(this.hardpoint).addEventListener('keyup', function(){
     // a.loadHardpoint()
   })
-  
+
   this.listEquipment = function(target){
     target = document.getElementById(target)
-  
+
     target.dataset.ecount = this.equipments.length
     target.innerHTML = ''
-    
+
     /* Display array */
     for(var i = 0; i < this.equipments.length; i++){
       var html_string = '<li>'+this.equipments[i].n+' x '+this.equipments[i].c+'</li>'
-      
+
       var d = document.createElement('div')
       d.innerHTML = html_string
       d = d.firstChild
-      
+
       var btn = document.createElement('button')
       btn.innerHTML = 'Remove'
       btn.classList.add('danger')
@@ -214,14 +218,14 @@ var App = function(setting){
       d.appendChild(btn)
       target.appendChild(d)
     }
-    
+
     this.equipments.length === 0 ? target.innerHTML = '<li>No equipment added</li>' : target
   }
 }
 
 App.prototype.toggleTab = function(tabCount){
   var tabList = document.getElementsByClassName(this.tabClass)
-  
+
   for(var i = 0; i < tabList.length; i++){
     if(i === tabCount){
       tabList[i].classList.remove(this.hiddenClass)
@@ -234,11 +238,11 @@ App.prototype.toggleTab = function(tabCount){
 App.prototype.loadHardpoint = function(){
   var val = this.getVal('#'+this.hardpoint).replace(/\t/g,'').split(/\n/g)
   var tmp_html = {}
-  
+
   for(var i = 0; i < val.length; i++){
     var tmp = val[i].split(/\ /g)
     val[i] = {type:tmp[0],x:tmp[1],y:tmp[2]}
-    
+
     tmp_html[val[i].type.toLowerCase()] === undefined ? tmp_html[val[i].type.toLowerCase()] = '' : tmp_html[val[i].type.toLowerCase()] += ''
     var options = ''
     this.listItems(val[i].type.toLowerCase(),function(e){
@@ -259,14 +263,15 @@ App.prototype.generate = function(){
   var gc = ''
   gc += 'ship "' + this.getVal('#'+this.shipParam.name) + '"\n\t' // Write ship definition opening
   gc += 'sprite "ship/' + this.getVal('#'+this.shipParam.name) + '"\n\t' // sprite
-  
+
   switch(this.getVal('#'+this.shipParam.can_disable)){
     case true:
       gc += '"never disabled"\n\t' // can be disabled
     break;
   }
-  
+
   gc += 'attributes\n\t\t' // attributes
+  gc += 'category "' + this.ship_class[this.ship_class_id] + '"\n\t\t' // cost
   gc += '"cost" ' + this.getVal('#'+this.shipParam.cost) + '\n\t\t' // cost
   gc += '"shields" ' + this.getVal('#'+this.shipParam.shields) + '\n\t\t' // attributes
   gc += '"hull" ' + this.getVal('#'+this.shipParam.hull) + '\n\t\t' // hull
@@ -286,67 +291,67 @@ App.prototype.generate = function(){
   gc += '"weapon capacity" ' + this.getVal('#'+this.shipParam.weapon) + '\n\t\t' // weapon capacity
   gc += '"engine capacity" ' + this.getVal('#'+this.shipParam.engine) + '\n\t\t' // engine capacity
   gc += 'weapon\n\t\t\t' // weapon
-  
+
   var sd = (parseInt(this.getVal('#'+this.shipParam.shields),10) + parseInt(this.getVal('#'+this.shipParam.hull),10)) / 10
   var hd = sd / 2
   var hf = sd + hd
   var br = sd / 10
-  
+
   gc += '"blast radius" ' + br + '\n\t\t\t' // blast radius
   gc += '"shield damage" ' + sd + '\n\t\t\t' // shield damage
   gc += '"hull damage" ' + hd + '\n\t\t\t' // hull damage
   gc += '"hit force" ' + hf + '\n\t' // hit force
-  
+
   // Clear print array
   this.outfits = []
-  
+
   // Push mountpoint equipment to temp sorting array
   var mount_items = [];
   for(var i = 0; i < document.getElementsByClassName('essm-ship-outfit-c').length; i++){
     mount_items[document.getElementsByClassName('essm-ship-outfit-c')[i].value] === undefined ? mount_items[document.getElementsByClassName('essm-ship-outfit-c')[i].value] = 1 : mount_items[document.getElementsByClassName('essm-ship-outfit-c')[i].value] += 1
   }
-  
+
   // Push mountpoint equipment temp sorting array to printing array
   for(prop in mount_items){
     this.outfits.push({name:prop,property:mount_items[prop]})
   }
-  
+
   // Push equipment data to printing array (outfits)
   for(var i = 0; i < this.equipments.length; i++){
     this.outfits.push({name:this.equipments[i].n,property:this.equipments[i].c})
   }
-  
+
   // List all selected outfits
   gc += 'outfits\n\t' // outfits
   for(var i = 0; i < this.outfits.length; i++){
     gc += '\t"' + this.outfits[i].name + '"' // outfit name
     this.outfits[i].hasOwnProperty('property') ? gc += ' ' + this.outfits[i].property + '\n\t' : gc += '\n\t' // outfit property
   }
-  
+
   // Generate mountpoints with its attached outfit
   for(var i = 0; i < this.mountPoints.length; i++){
     gc += this.mountPoints[i].type+' ' + this.mountPoints[i].x+ ' ' + this.mountPoints[i].y // mountpoint data
     document.getElementsByClassName('essm-ship-outfit-c')[i].value == '' ? gc+='' : gc+=' "'+document.getElementsByClassName('essm-ship-outfit-c')[i].value+'"' // mountpoint attachment data
     gc += '\n\t' // hit force
   }
-  
+
   gc += 'description "' + this.getVal('#'+this.shipParam.desc).replace(/\n|\t/g,'') + '"' // ship description
   document.getElementById(this.codeGenID).innerHTML = gc
 }
 
 App.prototype.listItems = function(target_type,callback){
   var elementList = []
-  
+
   /* Generate option */
   for(var i = 0; i < this.outfit_list.length; i++){
     if(this.outfit_list[i].type === target_type || this.outfit_list[i].type === target_type+'s'){
       elementList.push(this.outfit_list[i].name)
     }
   }
-  
+
   if(typeof callback == 'function')
     callback(elementList)
-  
+
   return elementList
 }
 
@@ -363,3 +368,8 @@ App.prototype.removeEquipment = function(target,index){
 App.prototype.test = function(){
   console.log('loaded')
 }
+
+App.prototype.getShipClass = function (callback) {
+  if(typeof callback == 'function')
+    callback(this.ship_class)
+};

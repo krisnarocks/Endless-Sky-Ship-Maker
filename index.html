@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="include/css/section.css" type="text/css">
     <link rel="stylesheet" href="include/css/ui.css" type="text/css">
   </head>
-  
+
   <body>
     <header>
       <div id="app-title" class="section-content">
         <h1>Endless Sky Ship Maker</h1><sub style="margin-top:-5px;position:absolute;">By Stanislaus Krisna</sub><br>
       </div>
-      
+
       <div id="app-generator-tab-container" class="section-content">
         <ul id="app-generator-tab">
           <li class="app-generator-tab-items" onClick="app.toggleTab(0)">Ship Attribute</li>
@@ -27,35 +27,42 @@
         </ul>
       </div>
     </header>
-    
+
     <div id="app-page-content">
       <div id="app-generator-shipAttr" class="section-content app-content">
         <h2>Ship Attribute</h2>
         <hr>
         <label for="ship-desc"><h3>Ship Description</h3></label><br><br><textarea id="ship-desc" style="width: 353px; height: 120px;"></textarea><br><br>
-        <h3>Ship Information</h3><br>
-        <label for="ship-inf-name">Ship Name: </label><input type="text" id="ship-inf-name"><br>
-        <label for="ship-inf-cost">Ship Cost: </label><input type="text" id="ship-inf-cost"><br>
-        <label for="ship-inf-shield">Ship Shield: </label><input type="text" id="ship-inf-shield"><br>
-        <label for="ship-inf-mass">Ship Mass: </label><input type="text" id="ship-inf-mass"><br>
-        <label for="ship-inf-drag">Ship Drag: </label><input type="text" id="ship-inf-drag"><br>
-        <label for="ship-inf-heat">Ship Heat Dissipation: </label><input type="text" id="ship-inf-heat"><br>
-        <label for="ship-inf-hull">Ship Hull: </label><input type="text" id="ship-inf-hull"><br>
-        <label for="ship-inf-disable">Ship can be disabled? </label><input type="checkbox" id="ship-inf-disable"><br>
-        <label for="ship-inf-auto">Ship can be automated? </label><input type="checkbox" id="ship-inf-auto"><br><br><br>
-        
-        <h3>Crew</h3><br>
-        <label for="ship-crew-min">Ship Minimum Crew: </label><input type="text" id="ship-crew-min"><br>
-        <label for="ship-crew-bunk">Ship Bunk: </label><input type="text" id="ship-crew-bunk"><br><br><br>
-        
-        <h3>Capacity</h3><br>
-        <label for="ship-res-fuel">Ship Fuel Capacity: </label><input type="text" id="ship-res-fuel"><br>
-        <label for="ship-res-cargo">Ship Cargo Space: </label><input type="text" id="ship-res-cargo"><br>
-        <label for="ship-res-outfit">Ship Outfit Space: </label><input type="text" id="ship-res-outfit"><br>
-        <label for="ship-res-weapon">Ship Weapon Capacity: </label><input type="text" id="ship-res-weapon"><br>
-        <label for="ship-res-ngin">Ship Engine Capacity: </label><input type="text" id="ship-res-ngin"><br>
+        <h3 style="display: inline;">Ship Information</h3> <span style="display: inline; cursor: default;" onClick="if(document.getElementById('ship-info-container').style.display == 'block'){document.getElementById('ship-info-container').style.display = 'none'}else{document.getElementById('ship-info-container').style.display = 'block'}">Show/Hide</span><br>
+        <div id="ship-info-container" style="display: none;">
+          <label for="ship-inf-category">Ship Category: </label> <select id="ship-inf-category"></select><br>
+          <label for="ship-inf-name">Ship Name: </label><input type="text" id="ship-inf-name"><br>
+          <label for="ship-inf-cost">Ship Cost: </label><input type="text" id="ship-inf-cost"><br>
+          <label for="ship-inf-shield">Ship Shield: </label><input type="text" id="ship-inf-shield"><br>
+          <label for="ship-inf-mass">Ship Mass: </label><input type="text" id="ship-inf-mass"><br>
+          <label for="ship-inf-drag">Ship Drag: </label><input type="text" id="ship-inf-drag"><br>
+          <label for="ship-inf-heat">Ship Heat Dissipation: </label><input type="text" id="ship-inf-heat"><br>
+          <label for="ship-inf-hull">Ship Hull: </label><input type="text" id="ship-inf-hull"><br>
+          <label for="ship-inf-disable">Ship can be disabled? </label><input type="checkbox" id="ship-inf-disable"><br>
+          <label for="ship-inf-auto">Ship can be automated? </label><input type="checkbox" id="ship-inf-auto"><br><br><br>
+        </div>
+
+        <h3 style="display: inline;">Crew</h3>  <span style="display: inline; cursor: default;" onClick="if(document.getElementById('ship-crew-container').style.display == 'block'){document.getElementById('ship-crew-container').style.display = 'none'}else{document.getElementById('ship-crew-container').style.display = 'block'}">Show/Hide</span><br>
+        <div id="ship-crew-container"  style="display: none;">
+          <label for="ship-crew-min">Ship Minimum Crew: </label><input type="text" id="ship-crew-min"><br>
+          <label for="ship-crew-bunk">Ship Bunk: </label><input type="text" id="ship-crew-bunk"><br><br><br>
+        </div>
+
+        <h3 style="display: inline;">Capacity</h3>  <span style="display: inline; cursor: default;" onClick="if(document.getElementById('ship-capacity-container').style.display == 'block'){document.getElementById('ship-capacity-container').style.display = 'none'}else{document.getElementById('ship-capacity-container').style.display = 'block'}">Show/Hide</span><br>
+        <div id="ship-capacity-container"  style="display: none;">
+          <label for="ship-res-fuel">Ship Fuel Capacity: </label><input type="text" id="ship-res-fuel"><br>
+          <label for="ship-res-cargo">Ship Cargo Space: </label><input type="text" id="ship-res-cargo"><br>
+          <label for="ship-res-outfit">Ship Outfit Space: </label><input type="text" id="ship-res-outfit"><br>
+          <label for="ship-res-weapon">Ship Weapon Capacity: </label><input type="text" id="ship-res-weapon"><br>
+          <label for="ship-res-ngin">Ship Engine Capacity: </label><input type="text" id="ship-res-ngin"><br>
+        </div>
       </div>
-      
+
       <div id="app-generator-shipWep" class="section-content app-content app-content-hidden">
         <h2>Weapon & Engine</h2>
         <hr>
@@ -64,51 +71,51 @@
         <textarea id="ship-hardpoint-raw" style="width: 353px; height: 120px;" placeholder="paste your code here!"></textarea><br><br>
         <button onClick="app.loadHardpoint()">Load Hardpoint</button>
         <hr>
-        
+
         <h3 style="margin-bottom:5px;">Gun</h3>
         <ul id="ship-mount-gun-container" class="ship-mount-container">
         <li>No point loaded...</li>
         </ul><br><br>
-        
+
         <h3 style="margin-bottom:5px;">Turret</h3>
         <ul id="ship-mount-turret-container" class="ship-mount-container">
         <li>No point loaded...</li>
         </ul><br><br>
-        
+
         <h3 style="margin-bottom:5px;">Engine</h3>
         <ul id="ship-mount-ngin-container" class="ship-mount-container">
         <li>No point loaded...</li>
         </ul><br><br>
       </div>
-      
+
       <div id="app-generator-shipOutf" class="section-content app-content app-content-hidden">
         <h2>Ship Equipment</h2>
         <hr>
         <ul id="ship-equipt-list" data-ecount="0">
         <li>No equipment added</li>
         </ul><br><br>
-        
+
         <label for="item-selector">Equipment List</label><br>
         <select id="item-selector">
         </select><br><br>
-        
+
         <label for="item-count">Equipment Count</label><br>
         <input type="number" id="item-count" min="1" value="1"><br>
         <button style="margin-top: 10px;" onClick="app.addEquipment('ship-equipt-list',document.getElementById('item-selector').selectedOptions[0].value,document.getElementById('item-count').value)">Add equipment</button>
       </div>
-      
+
       <div id="app-generator-code" class="section-content app-content app-content-hidden">
         <h2>Code Copy</h2>
         <hr>
         <textarea id="app-generatedCode" readonly placeholder="Your generated code will be here..."></textarea>
       </div>
-      
+
       <div id="app-generator-generate" class="section-content">
         <hr><br>
         <button class="safe" onClick="app.generate();app.toggleTab(3)">Generate!</button>
       </div>
     </div>
-    
+
     <footer id="app-footer">
       <span class="section-content">
         <center style="margin-top: 20px;">Endless Sky Ship Maker, Version 162711<br>A space ship modding tool for <a href="http://endless-sky.github.io/" target="_blank">Endless Sky</a>.<br>Another project by <a href="http://krisnaslife.cu.cc" target="_blank">Stanislaus Krisna</a>.</center>
@@ -142,13 +149,35 @@
       hardpoint: 'ship-hardpoint-raw',
       mountPointContainer: {gun:'ship-mount-gun-container',turret:'ship-mount-turret-container',engine:'ship-mount-ngin-container'}
     })
-    
+
     app.listItems('other',function(e){
       if(document.getElementById('item-selector').innerHTML.replace(/\ /g,'').replace(/\n/g,'') === ''){
         for(var i = 0; i < e.length; i++){
           document.getElementById('item-selector').innerHTML += '<option value="'+e[i]+'">'+e[i]+'</option>'
         }
       }
+    })
+
+    app.getShipClass(function(e){
+      document.getElementById('ship-inf-category').innerHTML = '<option disabled selected>Select Category...</option>'
+      for(var i = 0; i < e.length; i++){
+        switch(e[i]){
+          case 'Transport':
+          document.getElementById('ship-inf-category').innerHTML += '<option disabled></option><option disabled style="font-weight:bold;">Civilian Ship</option>'
+          break;
+          case 'Interceptor':
+          document.getElementById('ship-inf-category').innerHTML += '<option disabled></option><option disabled style="font-weight:bold;">War Ship</option>'
+          break;
+          case 'Fighter':
+          document.getElementById('ship-inf-category').innerHTML += '<option disabled></option><option disabled style="font-weight:bold;">Other</option>'
+          break;
+        }
+        document.getElementById('ship-inf-category').innerHTML += '<option value="'+i+'">'+e[i]+'</option>'
+      }
+
+      document.getElementById('ship-inf-category').addEventListener('change',function(){
+        app.ship_class_id = this.value
+      })
     })
     </script>
   </body>
