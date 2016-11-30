@@ -166,13 +166,18 @@
       mountPointContainer: {gun:'ship-mount-gun-container',turret:'ship-mount-turret-container',engine:'ship-mount-ngin-container'}
     })
 
-    app.listItems('other',function(e){
-      if(document.getElementById('item-selector').innerHTML.replace(/\ /g,'').replace(/\n/g,'') === ''){
-        for(var i = 0; i < e.length; i++){
-          document.getElementById('item-selector').innerHTML += '<option value="'+e[i]+'">'+e[i]+'</option>'
-        }
+    function itemAdd(e,type){
+      document.getElementById('item-selector').innerHTML += '<option disabled></option><option disabled style="font-weight:bold;">'+type.capitalisation()+'</option>'
+      for(var i = 0; i < e.length; i++){
+        document.getElementById('item-selector').innerHTML += '<option value="'+e[i]+'">'+e[i]+'</option>'
       }
-    })
+    }
+
+    document.getElementById('item-selector').innerHTML = '<option disabled selected>Select Equipment...</option>'
+    app.listItems('power',itemAdd)
+    app.listItems('systems',itemAdd)
+    app.listItems('ammunition',itemAdd)
+    app.listItems('special',itemAdd)
 
     app.getShipClasses(function(e){
       document.getElementById('ship-inf-category').innerHTML = '<option disabled selected>Select Category...</option>'
