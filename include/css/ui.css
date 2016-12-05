@@ -153,7 +153,8 @@ input[type='text']:disabled,input[type='number']:disabled,textarea:disabled{
 }
 
 select{
-  padding: 5px;
+  height: 25px;
+  background-color: white;
   border-radius: 3px;
   margin: 5px 0px 5px 0px;
   width: 181px;
