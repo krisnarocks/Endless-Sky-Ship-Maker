@@ -476,12 +476,17 @@ App.prototype.generate = function(){
   // List all selected outfits
   gc += 'outfits\n\t' // outfits
   for(var i = 0; i < this.outfits.length; i++){
-    gc += '\t"' + this.outfits[i].name + '"' // outfit name
-    this.outfits[i].hasOwnProperty('property') ? gc += ' ' + this.outfits[i].property + '\n\t' : gc += '\n\t' // outfit property
+    if(this.outfits[i].name != ''){
+      gc += '\t"' + this.outfits[i].name + '"' // outfit name
+      this.outfits[i].hasOwnProperty('property') ? gc += ' ' + this.outfits[i].property + '\n\t' : gc += '\n\t' // outfit property
+    }
   }
 
   // Generate mountpoints with its attached outfit
   for(var i = 0; i < this.mountPoints.length; i++){
+    if(this.mountPoints[i].x === undefined || this.mountPoints[i].y === undefined)
+    break;
+
     gc += this.mountPoints[i].type+' ' + this.mountPoints[i].x+ ' ' + this.mountPoints[i].y // mountpoint data
     document.getElementsByClassName('essm-ship-outfit-c')[i].value == '' ? gc+='' : gc+=' "'+document.getElementsByClassName('essm-ship-outfit-c')[i].value+'"' // mountpoint attachment data
     gc += '\n\t' // hit force

@@ -67,10 +67,99 @@
       <div id="app-generator-shipWep" class="section-content app-content app-content-hidden">
         <h2>Weapon & Engine</h2>
         <hr>
-        <h3>Ship hardpoint loader</h3><br>
-        <p>Use the <a href="http://endless-sky.github.io/ship_builder.html" target="_blank">ship builder</a> to generate the ship hardpoint. Once done, you can copy the code generated from that page then paste it in the box bellow. Then you can assign weapons and engine to each point. <br><br>
-        <textarea id="ship-hardpoint-raw" style="width: 353px; height: 120px;" placeholder="paste your code here!"></textarea><br><br>
-        <button onClick="app.loadHardpoint()">Load Hardpoint</button>
+        <h3>Ship hardpoint editor</h3><br>
+        <p>Making your own custom hardpoint is easy! Follow the guides bellow to start making your own custom hardpoint.</p><br>
+        <p><b>Step 1: </b> <input type="file" id="app-generator-nodeEditor-imageLoader"></p><br>
+        <p><b>Step 2: </b> Click to add new point</p>
+        <div>
+          <style>
+          #app-generator-nodeEditor-buttons li{list-style: none;}
+          #app-generator-nodeEditor-buttons li:first-child button{
+            border-radius: 3px 3px 0px 0px !important;
+            margin-right: -2px;
+            margin-top: 125px;
+            outline: none;
+            box-shadow: 0 0 0 1px #d1d1d1;
+          }
+          #app-generator-nodeEditor-buttons li:last-child button{
+            border-radius: 0px 0px 3px 3px !important;
+            margin-right: -2px;
+            outline: none;
+            box-shadow: 0 0 0 1px #d1d1d1;
+          }
+          #app-generator-nodeEditor-buttons li:not(:first-child) button{margin: 0 0 0 0}
+          #app-generator-nodeEditor-buttons li button{width: 60px}
+          #app-generator-nodeEditor-buttons{display: inline-block}
+
+          #app-generator-nodeEditor-canvas{
+            /*outline: solid 1px #e1e1e1;*/
+            vertical-align: middle;
+            max-height: calc(100% - 20px);
+            max-width: calc(100% - 20px);
+            margin-left: -3px;
+          }
+
+          #app-generator-nodeEditor-canvas.loaded{cursor: crosshair;}
+
+          .app-generator-nodeEditor-container{
+            width: calc(50% - 40px);
+            background: #efefef;
+            position: relative;
+            height: 300px;
+            padding: 10px 0px;
+            border-radius: 5px;
+            margin: 20px 0px;
+            box-shadow: inset 0px 0px 7px -2px #000
+          }
+
+          #app-generator-nodeEditor-imageHolder{
+            float:left;
+            margin-right: 10px;
+            text-align: center;
+          }
+          #app-generator-nodeEditor-nodeList{
+            float:right;
+            margin-left: 10px;
+          }
+
+          #app-generator-nodeEditor-nodeList-container{
+            width: calc(100% - 20px);
+            margin-left: 10px;
+          }
+          #app-generator-nodeEditor-nodeList-container li{
+            list-style: none;
+            padding: 7px 10px 0px 10px;
+            border-bottom: solid 1px grey;
+            background: transparent;
+            height: 40px;
+          }
+
+          #app-generator-nodeEditor-imageHolder-helper{
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+          }
+          </style>
+          <div id="app-generator-nodeEditor-imageHolder" class="app-generator-nodeEditor-container">
+            <span id="app-generator-nodeEditor-imageHolder-helper"></span>
+            <canvas id="app-generator-nodeEditor-canvas" width="300px" height="150px">Canvas not supported...</canvas>
+          </div>
+          <ul id="app-generator-nodeEditor-buttons">
+            <li><button id="app-generator-nodeEditor-gunAddNode">Gun</button></li>
+            <li><button id="app-generator-nodeEditor-turretAddNode">Turret</button></li>
+            <li><button id="app-generator-nodeEditor-engineAddNode">Engine</button></li>
+          </ul>
+          <div id="app-generator-nodeEditor-nodeList" class="app-generator-nodeEditor-container">
+            <div style="overflow-y: scroll; height: calc(100% + 20px); margin-top: -10px;">
+              <ul id="app-generator-nodeEditor-nodeList-container">
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- <p>Use the <a href="http://endless-sky.github.io/ship_builder.html" target="_blank">ship builder</a> to generate the ship hardpoint. Once done, you can copy the code generated from that page then paste it in the box bellow. Then you can assign weapons and engine to each point. --><br>
+        <textarea id="ship-hardpoint-raw" style="width: 353px; height: 120px; display: none;" placeholder="paste your code here!"></textarea><br><br>
+        <p style="margin-top: 90px;"><b>Step 3: </b> Press the button below!</p><br>
+        <button id="app-generator-nodeEditor-applyButton">Apply Hardpoint</button> <button class="danger" id="app-generator-nodeEditor-resetButton">Reset Hardpoint</button><br><br>
         <hr>
 
         <h3 style="margin-bottom:5px;">Gun</h3>
@@ -138,6 +227,7 @@
       </span>
     </footer>
     <script src="include/js/app.js"></script>
+    <script src="include/js/ship_tracer.js"></script>
     <script>
     var app = new App({
       tabClass: 'app-content',
@@ -213,6 +303,55 @@
         document.getElementById('explosion-spawn-count').value = document.getElementById('explosion-spawn-count').disabled = (this.value.includes('final explosion') == true ? 1 : 0)
       })
     })
+
+    function resetHardpointData(){
+      document.getElementById('app-generator-nodeEditor-nodeList-container').innerHTML = ''
+      document.getElementById('ship-hardpoint-raw').value = ''
+
+      var ele = document.getElementsByClassName('ship-mount-container')
+      for(var i = 0; i < ele.length; i++){
+        ele[i].innerHTML = '<li>No point loaded...</li>'
+      }
+    }
+
+    var st = new ShipTracer({
+      canvasObject: document.getElementById('app-generator-nodeEditor-canvas'),
+      imageInput: document.getElementById('app-generator-nodeEditor-imageLoader'),
+      imageInputOnChange: resetHardpointData
+    })
+
+    function addNode(nodeName){
+      // Read data from canvas and write the data to the container
+      document.getElementById('app-generator-nodeEditor-nodeList-container').innerHTML += '<li><span class="app-generator-nodeEditor-hardpoint-list" style="width: calc(100% - 70px); display: block; float: left; padding-top: 10px;">'+nodeName+' '+st.currentPosition.x+' '+st.currentPosition.y+'</span> <button style="float: right;" class="danger" onclick="this.parentNode.remove()">Remove</button></li>'
+    }
+
+    document.getElementById('app-generator-nodeEditor-gunAddNode').addEventListener('click',function(){
+      addNode('gun')
+    })
+
+    document.getElementById('app-generator-nodeEditor-turretAddNode').addEventListener('click',function(){
+      addNode('turret')
+    })
+
+    document.getElementById('app-generator-nodeEditor-engineAddNode').addEventListener('click',function(){
+      addNode('engine')
+    })
+
+    document.getElementById('app-generator-nodeEditor-applyButton').addEventListener('click', function(){
+      // Print data in container to the hidden textarea
+      var hp = document.getElementsByClassName('app-generator-nodeEditor-hardpoint-list')
+
+      // Reset textarea innerHTML
+      document.getElementById('ship-hardpoint-raw').value = ''
+
+      for(var i = 0; i < hp.length; i++){
+        document.getElementById('ship-hardpoint-raw').value += hp[i].innerHTML + '\n'
+      }
+
+      app.loadHardpoint()
+    })
+
+    document.getElementById('app-generator-nodeEditor-resetButton').addEventListener('click', resetHardpointData)
     </script>
   </body>
 </html>
